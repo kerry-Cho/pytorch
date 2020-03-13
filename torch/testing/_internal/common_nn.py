@@ -49,13 +49,17 @@ module_tests = [
     dict(
         module_name='Linear',
         constructor_args=(10, 8),
+        cpp_constructor_args='torch::nn::LinearOptions(10, 8)',
         input_size=(4, 10),
+        cpp_input_args=['torch::randn({4, 10})'],
         reference_fn=lambda i, p, _: torch.mm(i, p[0].t()) + p[1].view(1, -1).expand(4, 8),
     ),
     dict(
         module_name='Linear',
         constructor_args=(10, 8, False),
+        cpp_constructor_args='torch::nn::LinearOptions(10, 8).bias(false)',
         input_size=(4, 10),
+        cpp_input_args=['torch::randn({4, 10})'],
         desc='no_bias',
         reference_fn=lambda i, p, _: torch.mm(i, p[0].t())
     ),
